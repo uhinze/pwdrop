@@ -1,65 +1,102 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<html lang="en">
+<head>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/7.6.1/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/7.6.1/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.6.1/firebase-database.js"></script>
-    <script defer src="/__/firebase/7.6.1/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/7.6.1/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Your page title here :)</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <div class="row">
+      <div class="one-half column" style="margin-top: 15%">
+        <h1>pw drop</h1>
+        <p>Exchange passwords, <a href="security.html">securely</a>.</p>
+      </div>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+    
+    <form>
+      <div class="row">
+        <div class="u-full-width">
+          <label for="secret">Secret</label>
+          <input class="u-full-width" type="password" placeholder="mysecret" id="secret">
+        </div>
+      </div>
+      
+      <label>
+        <input type="checkbox">
+        <span class="label-body">Protect with password: </span>
+        <input type="password" id="password">
+      </label>
+      <label>
+        <input type="checkbox">
+        <span class="label-body">Delete after </span>
+        <input type="number" id="days">
+        <span class="label-body"> days.</span>
+      </label>
+      <label>
+        <input type="checkbox">
+        <span class="label-body">Delete after </span>
+        <input type="number" id="views">
+        <span class="label-body"> views.</span>
+      </label>
+      <input class="button-primary" type="submit" value="Submit">
+    </form>
+    
+    <!-- Always wrap checkbox and radio inputs in a label and use a <span class="label-body"> inside of it -->
+  </div>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+  <div class="container">
+    <div class="row">
+      <div class="u-full-width">
+        <h3>An easy and secure way to exchange passwords and other secrets</h3>
+        <p>Exchanging passwords via email is still the norm in many enterprises. This is highly risky for several reasons:</p>
+        <ul>
+          <li>Emails are usually not end-to-end encrypted, except if you have manually set up certificates.</li>
+          <li>Lots of times, emails are not even encrypted in transit (between the sending and receiving email server), so the communication is easily hijacked by an attacker.</li>
+          <li>Emails stay around forever. Even when you think you delete them, they often just end up in an "archive" and are still readable to anyone who gains access to your account.</li>
+        </ul>
+        <p>This project tries to get rid of this insecure habit by providing an easier, more secure way to exchange secret information.</p>
+        <p>There are some existing alternatives that work in a similar manner, but do not provide the same rich <a href="security.html">security feature set</a>.</p>
+      </div>
+    </div>
+  </div>
 
-        try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
-  </body>
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="/__/firebase/7.6.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="/__/firebase/7.6.1/firebase-analytics.js"></script>
+
+<!-- Initialize Firebase -->
+<script src="/__/firebase/init.js"></script>
+</body>
 </html>
