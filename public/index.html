@@ -59,16 +59,6 @@
           </div>
 
           <label>
-            <input type="checkbox" v-model="isProtected" />
-            <span class="label-body">Protect with password: </span>
-            <input
-              type="password"
-              id="password"
-              v-model="password"
-              v-on:input="onPasswordChange"
-            />
-          </label>
-          <label>
             <input type="checkbox" v-model="maxDaysSelected" />
             <span class="label-body">Delete after </span>
             <input type="number" id="days" v-model="maxDays" />
@@ -79,6 +69,16 @@
             <span class="label-body">Delete after </span>
             <input type="number" id="views" v-model="maxViews" />
             <span class="label-body"> views.</span>
+          </label>
+          <label>
+            <input type="checkbox" v-model="isProtected" />
+            <span class="label-body">Protect with password: </span>
+            <input
+              type="password"
+              id="password"
+              v-model="password"
+              v-on:input="onPasswordChange"
+            />
           </label>
           <div class="row">
             <div class="two columns">
