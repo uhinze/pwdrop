@@ -7,6 +7,8 @@ let generationForm = new Vue({
     maxDays: 2,
     password: "",
     secret: "",
+    secretInputType: "password",
+    secretInputButton: "fa-eye",
     isProtected: false,
     disabled: false,
     link: ""
@@ -16,6 +18,7 @@ let generationForm = new Vue({
       this.password ? (this.isProtected = true) : (this.isProtected = false);
       await this.$nextTick();
     },
+    hideReveal,
     submit: async function() {
       this.disabled = true;
       await this.$nextTick();

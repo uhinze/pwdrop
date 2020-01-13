@@ -340,6 +340,12 @@ input[type="button"][disabled].button-primary {
   background-color: #bbb;
   border-color: #bbb;
 }
+button.in-field {
+  margin-left: -60px;
+  height: 20px;
+  width: 50px;
+  border: none;
+}
 
 /* Forms
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

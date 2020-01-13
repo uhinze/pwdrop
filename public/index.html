@@ -21,6 +21,10 @@
       rel="stylesheet"
       type="text/css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"
+    />
 
     <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -44,17 +48,19 @@
 
       <div id="generation-form">
         <form>
+          <label for="secret">Password or other secret</label>
           <div class="row">
-            <div class="u-full-width">
-              <label for="secret">Secret</label>
+            <div class="ten columns">
               <input
                 :disabled="disabled"
-                class="u-full-width"
-                type="password"
-                placeholder="mysecret"
+                class="ten columns"
+                :type="secretInputType"
                 id="secret"
                 v-model="secret"
               />
+              <button type="button" class="in-field" v-on:click="hideReveal">
+                <i class="fas" v-bind:class="secretInputButton"></i>
+              </button>
             </div>
           </div>
 
@@ -155,6 +161,7 @@
     <!-- Initialize Firebase -->
     <script src="/__/firebase/init.js"></script>
 
+    <script src="common.js"></script>
     <script src="index.js"></script>
   </body>
 </html>

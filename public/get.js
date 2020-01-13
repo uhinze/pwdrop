@@ -2,7 +2,12 @@ let retrievePw = new Vue({
   el: "#retrieve-pw",
   data: {
     id: "",
-    secret: ""
+    secret: "",
+    secretInputType: "password",
+    secretInputButton: "fa-eye"
+  },
+  methods: {
+    hideReveal
   },
   async beforeMount() {
     let uri = window.location.search.substring(1);

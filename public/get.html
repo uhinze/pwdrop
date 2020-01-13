@@ -21,6 +21,10 @@
       rel="stylesheet"
       type="text/css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"
+    />
 
     <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -34,22 +38,32 @@
   <body>
     <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <div class="container">
-      <div class="row">
-        <div class="one-half column" style="margin-top: 15%">
+
+    <div id="retrieve-pw">
+      <div class="container">
+        <div style="margin-top: 15%">
           <h1>pw drop</h1>
-          <div id="retrieve-pw">
-            <label for="secret">Retrieved value</label>
+        </div>
+
+        <label for="secret">Retrieved value</label>
+        <div class="row">
+          <div class="ten columns">
             <input
-              class="u-full-width"
-              type="text"
+              class="ten columns"
+              :type="secretInputType"
               id="secret"
               v-model="secret"
             />
+            <button type="button" class="in-field" v-on:click="hideReveal">
+              <i class="fas" v-bind:class="secretInputButton"></i>
+            </button>
           </div>
-          <a href="index.html">Drop another password.</p>
         </div>
       </div>
+      <div class="container">
+        <a href="index.html">Drop another password.</a>
+      </div>
+    </div>
 
     <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -64,6 +78,7 @@
     <!-- Initialize Firebase -->
     <script src="/__/firebase/init.js"></script>
 
+    <script src="common.js"></script>
     <script src="get.js"></script>
   </body>
 </html>
