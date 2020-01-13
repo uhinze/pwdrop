@@ -12,6 +12,10 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
+        "source": "/get",
+        "destination": "/get.html"
+      },
+      {
         "source": "/secret",
         "function": "api"
       }

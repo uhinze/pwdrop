@@ -4,9 +4,11 @@
     <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="utf-8" />
-    <title>Your page title here :)</title>
+    <title>pwdrop - Exchange passwords, securely</title>
     <meta name="description" content="" />
     <meta name="author" content="" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -34,36 +36,34 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <div class="container">
       <div class="row">
-        <div class="u-full-width" style="margin-top: 15%">
+        <div class="one-half column" style="margin-top: 15%">
           <h1>pw drop</h1>
-          <p>Most important security features:</p>
-          <ul>
-            <li>Encrypted communication using HTTPS</li>
-            <li>Encrypted storage using AES256 Server-Side Encryption</li>
-            <li>
-              Optional
-              <a href="http://bitwiseshiftleft.github.io/sjcl/"
-                >client-side encryption</a
-              >
-              using password.
-            </li>
-            <li>Configurable deletion time and maximum view count.</li>
-            <li>Optional manual deletion at any time.</li>
-            <li>Best practice HTTP security headers.</li>
-            <li>
-              Minimum attack surface by using as few third-party libraries as
-              possible.
-            </li>
-          </ul>
+          <div id="retrieve-pw">
+            <label for="secret">Retrieved value</label>
+            <input
+              class="u-full-width"
+              type="text"
+              id="secret"
+              v-model="secret"
+            />
+          </div>
+          <a href="index.html">Drop another password.</p>
         </div>
       </div>
 
-      <!-- Always wrap checkbox and radio inputs in a label and use a <span class="label-body"> inside of it -->
-
-      <!-- Note: The class .u-full-width is just a utility class shorthand for width: 100% -->
-    </div>
-
     <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="/__/firebase/7.6.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="/__/firebase/7.6.1/firebase-analytics.js"></script>
+
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
+
+    <script src="get.js"></script>
   </body>
 </html>

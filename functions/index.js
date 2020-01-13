@@ -49,7 +49,7 @@ app.post(
     console.log(id);
 
     let db = admin.firestore();
-    let document = await db
+    await db
       .collection("secrets")
       .doc(id)
       .set({
