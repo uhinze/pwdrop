@@ -6,12 +6,9 @@ const express = require("express");
 const { checkSchema, validationResult } = require("express-validator");
 const app = express();
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-exports.secret = functions.region("europe-west1").https.onRequest(app);
+exports.api = functions.https.onRequest(app);
 
-app.get("/", async (req, res) => {
+app.get("/secret", async (req, res) => {
   let id = req.query.id;
 
   let db = admin.firestore();
@@ -30,7 +27,7 @@ app.get("/", async (req, res) => {
 });
 
 app.post(
-  "/",
+  "/secret",
   checkSchema({
     ttl: { optional: true },
     maxViews: { optional: true, isNumeric: true },

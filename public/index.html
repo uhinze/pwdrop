@@ -1,102 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-
-  <!-- Basic Page Needs
+  <head>
+    <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <meta charset="utf-8">
-  <title>pwdrop - Exchange passwords, securely</title>
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <meta charset="utf-8" />
+    <title>pwdrop - Exchange passwords, securely</title>
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-  <!-- Mobile Specific Metas
+    <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- FONT
+    <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <link
+      href="//fonts.googleapis.com/css?family=Raleway:400,300,600"
+      rel="stylesheet"
+      type="text/css"
+    />
 
-  <!-- CSS
+    <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/skeleton.css" />
 
-  <!-- Favicon
+    <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="icon" type="image/png" href="images/favicon.png">
-
-</head>
-<body>
-
-  <!-- Primary Page Layout
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+  </head>
+  <body>
+    <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <div class="container">
-    <div class="row">
-      <div class="one-half column" style="margin-top: 15%">
-        <h1>pw drop</h1>
-        <p>Exchange passwords, <a href="security.html">securely</a>.</p>
-      </div>
-    </div>
-    
-    <form>
+    <div class="container">
       <div class="row">
-        <div class="u-full-width">
-          <label for="secret">Secret</label>
-          <input class="u-full-width" type="password" placeholder="mysecret" id="secret">
+        <div class="one-half column" style="margin-top: 15%">
+          <h1>pw drop</h1>
+          <p>Exchange passwords, <a href="security.html">securely</a>.</p>
         </div>
       </div>
-      
-      <label>
-        <input type="checkbox">
-        <span class="label-body">Protect with password: </span>
-        <input type="password" id="password">
-      </label>
-      <label>
-        <input type="checkbox">
-        <span class="label-body">Delete after </span>
-        <input type="number" id="days">
-        <span class="label-body"> days.</span>
-      </label>
-      <label>
-        <input type="checkbox">
-        <span class="label-body">Delete after </span>
-        <input type="number" id="views">
-        <span class="label-body"> views.</span>
-      </label>
-      <input class="button-primary" type="submit" value="Submit">
-    </form>
-    
-    <!-- Always wrap checkbox and radio inputs in a label and use a <span class="label-body"> inside of it -->
-  </div>
 
-  <div class="container">
-    <div class="row">
-      <div class="u-full-width">
-        <h3>An easy and secure way to exchange passwords and other secrets</h3>
-        <p>Exchanging passwords via email is still the norm in many enterprises. This is highly risky for several reasons:</p>
-        <ul>
-          <li>Emails are usually not end-to-end encrypted, except if you have manually set up certificates.</li>
-          <li>Lots of times, emails are not even encrypted in transit (between the sending and receiving email server), so the communication is easily hijacked by an attacker.</li>
-          <li>Emails stay around forever. Even when you think you delete them, they often just end up in an "archive" and are still readable to anyone who gains access to your account.</li>
-        </ul>
-        <p>This project tries to get rid of this insecure habit by providing an easier, more secure way to exchange secret information.</p>
-        <p>There are some existing alternatives that work in a similar manner, but do not provide the same rich <a href="security.html">security feature set</a>.</p>
+      <div id="generation-form">
+        <form>
+          <div class="row">
+            <div class="u-full-width">
+              <label for="secret">Secret</label>
+              <input
+                class="u-full-width"
+                type="password"
+                placeholder="mysecret"
+                id="secret"
+                v-model="secret"
+              />
+            </div>
+          </div>
+
+          <label>
+            <input type="checkbox" v-model="isProtected" />
+            <span class="label-body">Protect with password: </span>
+            <input
+              type="password"
+              id="password"
+              v-model="password"
+              v-on:input="onPasswordChange"
+            />
+          </label>
+          <label>
+            <input type="checkbox" v-model="maxDaysSelected" />
+            <span class="label-body">Delete after </span>
+            <input type="number" id="days" v-model="maxDays" />
+            <span class="label-body"> days.</span>
+          </label>
+          <label>
+            <input type="checkbox" v-model="maxViewsSelected" />
+            <span class="label-body">Delete after </span>
+            <input type="number" id="views" v-model="maxViews" />
+            <span class="label-body"> views.</span>
+          </label>
+          <input
+            class="button-primary"
+            type="button"
+            value="Submit"
+            v-on:click="submit"
+          />
+        </form>
+
+        <!-- Always wrap checkbox and radio inputs in a label and use a <span class="label-body"> inside of it -->
       </div>
     </div>
-  </div>
 
-<!-- End Document
+    <div class="container">
+      <div class="row">
+        <div class="u-full-width">
+          <h3>
+            An easy and secure way to exchange passwords and other secrets
+          </h3>
+          <p>
+            Exchanging passwords via email is still the norm in many
+            enterprises. This is highly risky for several reasons:
+          </p>
+          <ul>
+            <li>
+              Emails are usually not end-to-end encrypted, except if you have
+              manually set up certificates.
+            </li>
+            <li>
+              Lots of times, emails are not even encrypted in transit (between
+              the sending and receiving email server), so the communication is
+              easily hijacked by an attacker.
+            </li>
+            <li>
+              Emails stay around forever. Even when you think you delete them,
+              they often just end up in an "archive" and are still readable to
+              anyone who gains access to your account.
+            </li>
+          </ul>
+          <p>
+            This project tries to get rid of this insecure habit by providing an
+            easier, more secure way to exchange secret information.
+          </p>
+          <p>
+            There are some existing alternatives that work in a similar manner,
+            but do not provide the same rich
+            <a href="security.html">security feature set</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="/__/firebase/7.6.1/firebase-app.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="/__/firebase/7.6.1/firebase-app.js"></script>
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
+    <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="/__/firebase/7.6.1/firebase-analytics.js"></script>
+    <script src="/__/firebase/7.6.1/firebase-analytics.js"></script>
 
-<!-- Initialize Firebase -->
-<script src="/__/firebase/init.js"></script>
-</body>
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
+
+    <script src="index.js"></script>
+  </body>
 </html>
