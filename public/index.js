@@ -7,7 +7,9 @@ let generationForm = new Vue({
     maxDays: 2,
     password: "",
     secret: "",
-    isProtected: false
+    isProtected: false,
+    disabled: false,
+    link: ""
   },
   methods: {
     onPasswordChange: async function() {
@@ -15,19 +17,16 @@ let generationForm = new Vue({
       await this.$nextTick();
     },
     submit: async function() {
-      let ttl;
-      if (this.maxDaysSelected) {
-        ttl = new Date() + this.maxDays;
-      } else {
-        ttl = new Date() + 30;
-      }
+      this.disabled = true;
+      await this.$nextTick();
 
-      await axios.post("/secret", {
-        ttl,
+      let response = await axios.post("/secret", {
+        maxDays: this.maxDaysSelected ? this.maxDays : 30,
         maxViews: this.maxViewsSelected ? this.maxViews : undefined,
         secret: this.secret,
         isProtected: this.isProtected
       });
+      this.link = window.location.origin + response.data.link;
     }
   }
 });

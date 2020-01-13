@@ -8,6 +8,12 @@ const app = express();
 
 exports.api = functions.https.onRequest(app);
 
+Date.prototype.addDays = function(days) {
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+};
+
 app.get("/secret", async (req, res) => {
   let id = req.query.id;
 
@@ -29,14 +35,13 @@ app.get("/secret", async (req, res) => {
 app.post(
   "/secret",
   checkSchema({
-    ttl: { optional: true },
+    maxDays: { optional: true, isNumeric: true },
     maxViews: { optional: true, isNumeric: true },
     secret: { isString: true },
     isProtected: { isBoolean: true }
   }),
   async (req, res) => {
     let body = req.body;
-    console.log(body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
@@ -45,8 +50,11 @@ app.post(
     let id = require("crypto")
       .randomBytes(48)
       .toString("hex");
+    console.log("id:", id);
 
-    console.log(id);
+    let maxDays = body.maxDays ? body.maxDays : 30;
+
+    let ttl = new Date().addDays(maxDays);
 
     let db = admin.firestore();
     await db
@@ -54,11 +62,11 @@ app.post(
       .doc(id)
       .set({
         secret: body.secret,
-        ttl: body.ttl, // TODO make optional
+        ttl,
         maxViews: body.maxViews, // TODO make optional
         isProtected: body.isProtected
       });
 
-    res.send({ id });
+    res.send({ link: "/get?id=" + id });
   }
 );

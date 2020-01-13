@@ -48,6 +48,7 @@
             <div class="u-full-width">
               <label for="secret">Secret</label>
               <input
+                :disabled="disabled"
                 class="u-full-width"
                 type="password"
                 placeholder="mysecret"
@@ -79,12 +80,23 @@
             <input type="number" id="views" v-model="maxViews" />
             <span class="label-body"> views.</span>
           </label>
-          <input
-            class="button-primary"
-            type="button"
-            value="Submit"
-            v-on:click="submit"
-          />
+          <div class="row">
+            <div class="two columns">
+              <input
+                :disabled="disabled"
+                class="button-primary"
+                type="button"
+                value="Submit"
+                v-on:click="submit"
+              />
+            </div>
+            <div class="ten columns" :hidden="!link">
+              <p>
+                Available under this <a :href="link">link</a> (right-click ->
+                copy link address to send to someone)
+              </p>
+            </div>
+          </div>
         </form>
 
         <!-- Always wrap checkbox and radio inputs in a label and use a <span class="label-body"> inside of it -->
