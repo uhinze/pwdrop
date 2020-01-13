@@ -14,18 +14,66 @@ Date.prototype.addDays = function(days) {
   return date;
 };
 
-app.get("/secret", (req, res) => {
-  getSecret(req, res)
-    .then(response => {
-      if (!response.body) {
-        res.status(response.status).end();
-      }
-      res.status(response.status).send(response.body);
-    })
-    .catch(e => {
-      console.log("Error during function execution: ", e);
-      res.status(500).end();
-    });
+app.get("/secret", async (req, res) => {
+  let id = req.query.id;
+
+  let db = admin.firestore();
+  let document = await db
+    .collection("secrets")
+    .doc(id)
+    .get();
+
+  if (!document.exists) {
+    console.log("Secret does not exist: ", id);
+    return res.status(404).end();
+  }
+
+  console.log("Secret exists: ", id);
+  let data = document.data();
+  if (!data.secret) {
+    console.log("Secret has invalid format, deleting and returning 404");
+    await db
+      .collection("secrets")
+      .doc(id)
+      .delete();
+    return res.status(404).end();
+  }
+
+  console.log(data.ttl.toDate());
+  console.log(new Date());
+  if (data.ttl.toDate() < new Date()) {
+    console.log("Secret is expired, deleting secret and returning 404");
+    await db
+      .collection("secrets")
+      .doc(id)
+      .delete();
+    return res.status(404).end();
+  }
+
+  if (data.maxViews) {
+    if (data.remainingViews <= 0) {
+      console.log("No remaining views, deleting secret and returning 404");
+      await db
+        .collection("secrets")
+        .doc(id)
+        .delete();
+      return res.status(404).end();
+    }
+
+    console.log("Decreasing remaining views by 1");
+    await db
+      .collection("secrets")
+      .doc(id)
+      .set(
+        {
+          remainingViews: data.remainingViews - 1
+        },
+        { merge: true }
+      );
+  }
+
+  console.log("Sending success return");
+  return res.status(200).send({ secret: document.data().secret });
 });
 
 app.post(
@@ -61,61 +109,11 @@ app.post(
         ttl,
         maxViews: body.maxViews,
         remainingViews: body.maxViews,
-        isProtected: body.isProtected
+        isProtected: body.isProtected,
+        timestamp: new Date()
       });
 
     console.log("Sending success return");
     res.send({ id, link: "/get?id=" + id });
   }
 );
-
-async function getSecret(req) {
-  let id = req.query.id;
-
-  let db = admin.firestore();
-  let document = await db
-    .collection("secrets")
-    .doc(id)
-    .get();
-
-  if (!document.exists) {
-    console.log("Secret does not exist: ", id);
-    return { status: 404 };
-  }
-
-  console.log("Secret exists: ", id);
-  let data = document.data();
-  if (data.ttl < new Date()) {
-    console.log("Secret is expired, deleting secret and returning 404");
-    await db
-      .collection("secrets")
-      .doc(id)
-      .delete();
-    return { status: 404 };
-  }
-
-  if (data.maxViews) {
-    if (data.remainingViews <= 0) {
-      console.log("No remaining views, deleting secret and returning 404");
-      await db
-        .collection("secrets")
-        .doc(id)
-        .delete();
-      return { status: 404 };
-    }
-
-    console.log("Decreasing remaining views by 1");
-    await db
-      .collection("secrets")
-      .doc(id)
-      .set(
-        {
-          remainingViews: data.remainingViews - 1
-        },
-        { merge: true }
-      );
-  }
-
-  console.log("Sending success return");
-  return { status: 200, body: { secret: document.data().secret } };
-}
