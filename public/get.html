@@ -44,7 +44,8 @@
         <div style="margin-top: 15%">
           <h1>pw drop</h1>
         </div>
-
+      </div>
+      <div class="container" :hidden="!found">
         <label for="secret">Retrieved value</label>
         <div class="row">
           <div class="ten columns">
@@ -59,6 +60,11 @@
             </button>
           </div>
         </div>
+      </div>
+
+      <div class="container" :hidden="found">
+        <h3>Not found</h3>
+        <p>This secret does not exist or is expired.</p>
       </div>
       <div class="container">
         <a href="index.html">Drop another password.</a>
