@@ -11,7 +11,8 @@ let generationForm = new Vue({
     secretInputButton: "fa-eye",
     isProtected: false,
     disabled: false,
-    link: ""
+    link: "",
+    errors: clearErrors()
   },
   methods: {
     onPasswordChange: async function() {
@@ -20,8 +21,22 @@ let generationForm = new Vue({
     },
     hideReveal,
     submit: async function() {
+      this.errors = clearErrors();
+      if (!this.secret) {
+        this.errors.secret = true;
+      }
+      if (this.maxDaysSelected && (this.maxDays < 1 || this.maxDays > 30)) {
+        this.errors.maxDays = true;
+      }
+      if (this.maxViewsSelected && this.maxViews < 1) {
+        this.errors.maxViews = true;
+      }
+
+      if (Object.values(this.errors).some(val => val)) {
+        return;
+      }
+
       this.disabled = true;
-      await this.$nextTick();
 
       let response = await axios.post("/secret", {
         maxDays: this.maxDaysSelected ? this.maxDays : 30,
@@ -33,3 +48,10 @@ let generationForm = new Vue({
     }
   }
 });
+function clearErrors() {
+  return {
+    secret: false,
+    maxDays: false,
+    maxViews: false
+  };
+}

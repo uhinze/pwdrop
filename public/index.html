@@ -63,6 +63,9 @@
               </button>
             </div>
           </div>
+          <p v-if="errors.secret" class="error">
+            Cannot be empty.
+          </p>
 
           <label>
             <input type="checkbox" v-model="maxDaysSelected" />
@@ -70,12 +73,18 @@
             <input type="number" id="days" v-model="maxDays" />
             <span class="label-body"> days.</span>
           </label>
+          <p v-if="errors.maxDays" class="error">
+            Must be between 1 and 30.
+          </p>
           <label>
             <input type="checkbox" v-model="maxViewsSelected" />
             <span class="label-body">Delete after </span>
             <input type="number" id="views" v-model="maxViews" />
             <span class="label-body"> views.</span>
           </label>
+          <p v-if="errors.maxViews" class="error">
+            Must be more than 1.
+          </p>
           <label>
             <input type="checkbox" v-model="isProtected" />
             <span class="label-body">Protect with password: </span>
