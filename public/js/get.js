@@ -9,7 +9,8 @@ let retrievePw = new Vue({
     isProtected: false,
     password: "",
     protectedSecret: "",
-    errors: clearErrors()
+    errors: clearErrors(),
+    copied: false
   },
   methods: {
     hideReveal,
@@ -21,6 +22,23 @@ let retrievePw = new Vue({
       } catch {
         this.errors.password = true;
       }
+    },
+    copy: function() {
+      var textArea = document.createElement("textarea");
+      textArea.value = this.secret;
+      textArea.style.position = "fixed"; //avoid scrolling to bottom
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        document.execCommand("copy");
+        this.copied = true;
+      } catch (err) {
+        console.error("Copy failed: ", err);
+      }
+
+      document.body.removeChild(textArea);
     }
   },
   async beforeMount() {

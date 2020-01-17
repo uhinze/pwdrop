@@ -86,6 +86,21 @@
             </button>
           </div>
         </div>
+        <div class="row">
+          <div class="two columns">
+            <input
+              class="button-primary"
+              type="button"
+              value="Copy"
+              v-on:click="copy"
+            />
+          </div>
+          <div class="ten columns" :hidden="!copied">
+            <p>
+              Copied to clipboard!
+            </p>
+          </div>
+        </div>
       </div>
 
       <div class="container" :hidden="found">
