@@ -83,8 +83,7 @@ app.post(
     maxViews: { in: ["body"], optional: true, isInt: { options: { min: 1 } } },
     secret: {
       in: ["body"],
-      isString: true,
-      isByteLength: { min: 1, max: 2000 }
+      isString: true
     },
     isProtected: { in: ["body"], isBoolean: true }
   }),
@@ -94,6 +93,10 @@ app.post(
     if (!errors.isEmpty()) {
       console.log("Invalid request, responding 422");
       return res.status(422).json({ errors: errors.array() });
+    }
+    if (body.secret.length > 2000 || body.secret.length < 1) {
+      console.log("Invalid length, responding 422");
+      return res.status(422).json({ msg: "Invalid secret length" });
     }
 
     let id = require("crypto")
