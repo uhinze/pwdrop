@@ -79,10 +79,14 @@ app.get("/secret", async (req, res) => {
 app.post(
   "/secret",
   checkSchema({
-    maxDays: { optional: true, isNumeric: true },
-    maxViews: { optional: true, isNumeric: true },
-    secret: { isString: true },
-    isProtected: { isBoolean: true }
+    maxDays: { in: ["body"], isInt: { options: { min: 1, max: 30 } } },
+    maxViews: { in: ["body"], optional: true, isInt: { options: { min: 1 } } },
+    secret: {
+      in: ["body"],
+      isString: true,
+      isByteLength: { min: 1, max: 2000 }
+    },
+    isProtected: { in: ["body"], isBoolean: true }
   }),
   async (req, res) => {
     let body = req.body;
