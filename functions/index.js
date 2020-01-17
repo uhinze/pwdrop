@@ -39,8 +39,6 @@ app.get("/secret", async (req, res) => {
     return res.status(404).end();
   }
 
-  console.log(data.ttl.toDate());
-  console.log(new Date());
   if (data.ttl.toDate() < new Date()) {
     console.log("Secret is expired, deleting secret and returning 404");
     await db
@@ -73,7 +71,9 @@ app.get("/secret", async (req, res) => {
   }
 
   console.log("Sending success return");
-  return res.status(200).send({ secret: document.data().secret });
+  return res
+    .status(200)
+    .send({ secret: data.secret, isProtected: data.isProtected });
 });
 
 app.post(

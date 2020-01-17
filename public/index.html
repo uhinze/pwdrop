@@ -95,6 +95,9 @@
               v-on:input="onPasswordChange"
             />
           </label>
+          <p v-if="errors.password" class="error">
+            Cannot be empty.
+          </p>
           <div class="row">
             <div class="two columns">
               <input
@@ -170,7 +173,8 @@
     <!-- Initialize Firebase -->
     <script src="/__/firebase/init.js"></script>
 
-    <script src="common.js"></script>
-    <script src="index.js"></script>
+    <script src="js/sjcl.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/index.js"></script>
   </body>
 </html>

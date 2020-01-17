@@ -31,6 +31,9 @@ let generationForm = new Vue({
       if (this.maxViewsSelected && this.maxViews < 1) {
         this.errors.maxViews = true;
       }
+      if (this.isProtected && !this.password) {
+        this.errors.password = true;
+      }
 
       if (Object.values(this.errors).some(val => val)) {
         return;
@@ -38,10 +41,16 @@ let generationForm = new Vue({
 
       this.disabled = true;
 
+      if (this.isProtected) {
+        secret = sjcl.encrypt(this.password, this.secret);
+      } else {
+        secret = this.secret;
+      }
+
       let response = await axios.post("/secret", {
         maxDays: this.maxDaysSelected ? this.maxDays : 30,
         maxViews: this.maxViewsSelected ? this.maxViews : undefined,
-        secret: this.secret,
+        secret,
         isProtected: this.isProtected
       });
       this.link = window.location.origin + response.data.link;
@@ -52,6 +61,7 @@ function clearErrors() {
   return {
     secret: false,
     maxDays: false,
-    maxViews: false
+    maxViews: false,
+    password: false
   };
 }

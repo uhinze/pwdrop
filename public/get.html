@@ -45,6 +45,32 @@
           <h1>pw drop</h1>
         </div>
       </div>
+      <div class="container" :hidden="!isProtected">
+        <label for="password">Enter password to decrypt</label>
+        <div class="row">
+          <div class="ten columns">
+            <input
+              class="ten columns"
+              id="password"
+              type="password"
+              v-model="password"
+            />
+          </div>
+        </div>
+        <p v-if="errors.password" class="error">
+          Wrong password.
+        </p>
+        <div class="row">
+          <div class="two columns">
+            <input
+              class="button-primary"
+              type="button"
+              value="Decrypt"
+              v-on:click="decrypt"
+            />
+          </div>
+        </div>
+      </div>
       <div class="container" :hidden="!found">
         <label for="secret">Retrieved value</label>
         <div class="row">
@@ -84,7 +110,8 @@
     <!-- Initialize Firebase -->
     <script src="/__/firebase/init.js"></script>
 
-    <script src="common.js"></script>
-    <script src="get.js"></script>
+    <script src="js/sjcl.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/get.js"></script>
   </body>
 </html>
