@@ -1,3 +1,5 @@
+const analytics = firebase.analytics();
+
 let generationForm = new Vue({
   el: "#generation-form",
   data: {
@@ -54,6 +56,7 @@ let generationForm = new Vue({
         isProtected: this.isProtected
       });
       this.link = window.location.origin + response.data.link;
+      firebase.analytics().logEvent("secret_submitted");
     }
   }
 });

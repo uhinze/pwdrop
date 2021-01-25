@@ -1,3 +1,4 @@
+const analytics = firebase.analytics();
 let retrievePw = new Vue({
   el: "#retrieve-pw",
   data: {
@@ -55,6 +56,7 @@ let retrievePw = new Vue({
       } else {
         this.protectedSecret = response.data.secret;
       }
+      firebase.analytics().logEvent("secret_retrieved");
     } catch {
       this.found = false;
     }
