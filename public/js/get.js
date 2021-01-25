@@ -56,7 +56,7 @@ let retrievePw = new Vue({
       } else {
         this.protectedSecret = response.data.secret;
       }
-      firebase.analytics().logEvent("secret_retrieved");
+      analytics.logEvent("secret_retrieved");
     } catch {
       this.found = false;
     }

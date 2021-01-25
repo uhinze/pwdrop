@@ -56,7 +56,7 @@ let generationForm = new Vue({
         isProtected: this.isProtected
       });
       this.link = window.location.origin + response.data.link;
-      firebase.analytics().logEvent("secret_submitted");
+      analytics.logEvent("secret_submitted");
     }
   }
 });
