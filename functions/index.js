@@ -12,8 +12,9 @@ let db = admin.firestore();
 
 exports.api = functions.https.onRequest(app);
 
-Date.prototype.addDays = function(days) {
-  var date = new Date(this.valueOf());
+Date.prototype.addDays = function(sdays) {
+  let days = parseInt(sdays)
+  var date = new Date();
   date.setDate(date.getDate() + days);
   return date;
 };
