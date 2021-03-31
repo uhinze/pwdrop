@@ -91,17 +91,22 @@ app.post(
     let maxDays = body.maxDays ? body.maxDays : MAX_DAYS;
     let ttl = new Date().addDays(maxDays);
 
+    let dbEntry = {
+      secret: body.secret,
+      ttl,
+      isProtected: body.isProtected,
+      timestamp: new Date()
+    }
+
+    if (body.maxViews) {
+      dbEntry.maxViews = body.maxViews
+      dbEntry.remainingViews = body.maxViews
+    }
+
     await db
       .collection(FIRESTORE_COLLECTION)
       .doc(id)
-      .set({
-        secret: body.secret,
-        ttl,
-        maxViews: body.maxViews,
-        remainingViews: body.maxViews,
-        isProtected: body.isProtected,
-        timestamp: new Date()
-      });
+      .set(dbEntry);
 
     console.log("Sending success return");
     return res.send({ id, link: "/get?id=" + id });
