@@ -147,7 +147,7 @@ async function deleteSecret(id) {
 }
 
 exports.scheduledFunction = functions.pubsub
-  .schedule("every day")
+  .schedule("every 24 hours")
   .onRun(async context => {
     let documents = await db.collection(FIRESTORE_COLLECTION).get();
 
